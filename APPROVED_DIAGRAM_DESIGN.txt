@@ -1,0 +1,15 @@
+Approved Small Engine Pro Parts Diagram design
+
+Visual target:
+- Dark navy compact header
+- Centered Parts Diagram / engine model
+- White technical drawing canvas
+- Swipe-out searchable component drawer with numbered rows
+- Detailed original technical exploded engine artwork
+- Right-side select/pan/explode controls
+- Assembled ↔ Exploded slider
+- Selected component card with OEM number, quantity, fitment, availability
+- Find This Part + Add to List actions
+- Mobile-first bottom navigation
+
+The illustration is original technical artwork, not a copied manufacturer diagram. Manufacturer-specific OEM data should be populated only from permitted/authorized sources.

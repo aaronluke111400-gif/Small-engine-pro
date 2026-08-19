@@ -1,0 +1,12 @@
+Small Engine Pro — Detailed Illustration Build
+
+The diagram viewer now uses original, high-detail technical vector artwork with individually selectable components. It is not a traced or copied manufacturer diagram.
+
+30 components are represented as separate SVG objects so the app can:
+- highlight individual components
+- map callouts to components
+- animate/explode component groups
+- zoom/pan
+- later attach exact OEM numbers and fitment data per engine/spec
+
+This artwork is a reusable visual/interaction foundation; engine-specific geometry and OEM data must be populated from permitted/authorized sources.
