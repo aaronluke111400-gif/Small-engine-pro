@@ -1,14 +1,5 @@
-Small Engine Pro — Swipe Drawer + Exploded Assembly Update
+Small Engine Pro — Detailed Interactive Diagram Update
 
-Added:
-- Swipe-out component drawer on iPhone
-- Edge swipe gesture to open/close component list
-- Drawer overlay and close control
-- Searchable component list
-- Selecting a component highlights it and closes drawer on mobile
-- Tap diagram callouts to select parts
-- Zoom, pan, reset and fit controls
-- Assembled ↔ Exploded slider that separates prototype component groups while preserving relative layout
-- Mobile-first diagram workspace
+This build replaces the placeholder boxes with a detailed line-art exploded engine schematic and 24 selectable component references. It includes the swipe-out component drawer, search, callout selection, zoom/pan, and progressive exploded-view slider.
 
-The included diagram is an interaction prototype. Real manufacturer diagrams and exact OEM data must be connected through authorized/licensed sources or permitted diagram files.
+IMPORTANT: The detailed drawing in this build is an original UI/technical illustration for interaction testing, not a manufacturer OEM diagram. Exact manufacturer diagrams and OEM fitment data should be connected only through authorized/licensed feeds or permitted catalog files.

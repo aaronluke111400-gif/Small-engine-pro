@@ -17,7 +17,7 @@ main{max-width:920px;margin:auto;padding:18px}.screen{display:none}.screen.activ
 .empty{text-align:center;padding:28px;color:var(--muted)}.camera{border:2px dashed #cbd5e1;border-radius:18px;padding:25px;text-align:center}.camera input{display:none}.camera label{display:block;font-weight:800;color:var(--blue);cursor:pointer}.photo{width:100%;border-radius:15px;margin-top:12px;display:none}.money{font-size:26px;font-weight:850}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:600px){main{padding:14px}.actions{grid-template-columns:repeat(2,1fr)}.grid,.two{grid-template-columns:1fr}.search{flex-direction:column}.search .btn{width:100%}}
 
-.diagramToolbar{display:flex;gap:8px;margin:10px 0}.diagramLayout{display:grid;grid-template-columns:250px 1fr;gap:10px}.componentPanel,.diagramCanvas{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.componentPanel{padding:10px;max-height:540px;overflow:auto}.componentItem{padding:12px;border-radius:12px;margin:5px 0;cursor:pointer;border:1px solid transparent}.componentItem:hover,.componentItem.selected{background:var(--blue2);border-color:#bfdbfe}.componentItem b{display:block}.componentItem span{font-size:12px;color:var(--muted)}.diagramCanvas{height:540px;overflow:hidden;touch-action:none;position:relative;background:var(--surface2)}.diagramViewport{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transform-origin:center;will-change:transform;cursor:grab}.diagramViewport.dragging{cursor:grabbing}.diagramViewport svg{width:92%;height:92%;overflow:visible}.partShape rect{fill:#e2e8f0;stroke:#64748b;stroke-width:3}.partShape text{fill:#334155;font-size:20px;font-weight:800;text-anchor:middle}.callout circle{fill:#2563eb;stroke:#fff;stroke-width:4;cursor:pointer}.callout text{fill:#fff;font-size:18px;font-weight:900;text-anchor:middle}.partShape.selected rect{fill:#dbeafe;stroke:#2563eb;stroke-width:7;filter:url(#glow)}.callout.selected circle{fill:#16a34a;stroke:#fff;stroke-width:6}.selectedPart h2{margin:0 0 5px}.selectedPart .partmeta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.partmeta .spec{background:var(--surface2)}@media(max-width:700px){.diagramLayout{grid-template-columns:1fr}.componentPanel{max-height:180px;order:2}.diagramCanvas{height:420px;order:1}.selectedPart{order:3}}
+.diagramToolbar{display:flex;gap:8px;margin:10px 0}.diagramLayout{display:grid;grid-template-columns:250px 1fr;gap:10px}.componentPanel,.diagramCanvas{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.componentPanel{padding:10px;max-height:540px;overflow:auto}.componentItem{padding:12px;border-radius:12px;margin:5px 0;cursor:pointer;border:1px solid transparent}.componentItem:hover,.componentItem.selected{background:var(--blue2);border-color:#bfdbfe}.componentItem b{display:block}.componentItem span{font-size:12px;color:var(--muted)}.diagramCanvas{height:540px;overflow:hidden;touch-action:none;position:relative;background:var(--surface2)}.diagramViewport{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transform-origin:center;will-change:transform;cursor:grab}.diagramViewport.dragging{cursor:grabbing}.diagramViewport svg{width:92%;height:92%;overflow:visible}.partShape path,.partShape rect,.partShape circle{fill:#e7ecf2;stroke:#475569;stroke-width:3}.partShape path[fill="none"]{fill:none}.partShape circle{fill:#cbd5e1}.technical .partShape{cursor:pointer}.callout circle{fill:#2563eb;stroke:#fff;stroke-width:4;cursor:pointer}.callout text{fill:#fff;font-size:18px;font-weight:900;text-anchor:middle}.partShape.selected rect{fill:#dbeafe;stroke:#2563eb;stroke-width:7;filter:url(#glow)}.callout.selected circle{fill:#16a34a;stroke:#fff;stroke-width:6}.selectedPart h2{margin:0 0 5px}.selectedPart .partmeta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.partmeta .spec{background:var(--surface2)}@media(max-width:700px){.diagramLayout{grid-template-columns:1fr}.componentPanel{max-height:180px;order:2}.diagramCanvas{height:420px;order:1}.selectedPart{order:3}}
 
 .drawerToggle{display:none;border:1px solid #d0d5dd;background:var(--surface);color:var(--text);border-radius:13px;padding:11px 14px;font-weight:800;margin:0 0 9px}.drawerOverlay{display:none}.drawerHeader{display:none}.iconbtn.light{background:var(--surface2);color:var(--text);border-color:var(--line);width:34px;height:34px}.explodeBar{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px 13px;margin:9px 0;box-shadow:var(--shadow);font-size:12px;font-weight:750}.explodeBar input{flex:1;accent-color:var(--blue)}.explodeBar b{min-width:34px;text-align:right;color:var(--blue)}.swipeHint{display:none;position:absolute;left:12px;bottom:12px;background:#0b1220dd;color:#fff;border-radius:999px;padding:7px 10px;font-size:11px;z-index:3}
 @media(max-width:700px){
@@ -71,27 +71,33 @@ main{max-width:920px;margin:auto;padding:18px}.screen{display:none}.screen.activ
           <defs>
             <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
           </defs>
-          <g id="partsGraphic">
-            <g class="partShape" data-part="1"><rect x="380" y="105" width="240" height="120" rx="18"/><text x="500" y="168">AIR CLEANER</text></g>
-            <g class="partShape" data-part="2"><rect x="315" y="245" width="150" height="105" rx="12"/><text x="390" y="302">CARBURETOR</text></g>
-            <g class="partShape" data-part="3"><rect x="535" y="245" width="150" height="105" rx="12"/><text x="610" y="302">CYLINDER</text></g>
-            <g class="partShape" data-part="4"><rect x="415" y="390" width="170" height="95" rx="14"/><text x="500" y="446">CRANKCASE</text></g>
-            <g class="partShape" data-part="5"><rect x="205" y="395" width="145" height="72" rx="12"/><text x="277" y="438">STARTER</text></g>
-            <g class="partShape" data-part="6"><rect x="650" y="395" width="145" height="72" rx="12"/><text x="722" y="438">MUFFLER</text></g>
-            <g class="partShape" data-part="7"><rect x="410" y="525" width="180" height="65" rx="12"/><text x="500" y="565">OIL FILTER</text></g>
-            <g class="partShape" data-part="8"><rect x="105" y="250" width="125" height="70" rx="12"/><text x="167" y="292">FUEL PUMP</text></g>
-          </g>
-          <g id="callouts">
-            <g class="callout" data-part="1"><circle cx="650" cy="120" r="20"/><text x="650" y="127">1</text></g>
-            <g class="callout" data-part="2"><circle cx="285" cy="270" r="20"/><text x="285" y="277">2</text></g>
-            <g class="callout" data-part="3"><circle cx="715" cy="270" r="20"/><text x="715" y="277">3</text></g>
-            <g class="callout" data-part="4"><circle cx="620" cy="430" r="20"/><text x="620" y="437">4</text></g>
-            <g class="callout" data-part="5"><circle cx="175" cy="430" r="20"/><text x="175" y="437">5</text></g>
-            <g class="callout" data-part="6"><circle cx="825" cy="430" r="20"/><text x="825" y="437">6</text></g>
-            <g class="callout" data-part="7"><circle cx="620" cy="555" r="20"/><text x="620" y="562">7</text></g>
-            <g class="callout" data-part="8"><circle cx="90" cy="250" r="20"/><text x="90" y="257">8</text></g>
-          </g>
-        </svg>
+          <g id="partsGraphic" class="technical">
+  <g class="partShape" data-part="1"><path d="M395 90h210l24 24v72l-24 24H395l-24-24v-72z"/><path d="M420 116h160v44H420z"/><circle cx="404" cy="150" r="7"/><circle cx="596" cy="150" r="7"/></g>
+  <g class="partShape" data-part="2"><path d="M340 250h95l22 20v65l-22 20h-95l-18-20v-65z"/><circle cx="366" cy="282" r="10"/><circle cx="407" cy="282" r="10"/><path d="M350 310h65"/></g>
+  <g class="partShape" data-part="3"><path d="M530 245h140l20 20v96l-20 20H530l-20-20v-96z"/><path d="M548 267h104v56H548z"/><path d="M548 337h104"/></g>
+  <g class="partShape" data-part="4"><path d="M420 390q0-28 28-38h110q28 10 28 38v80q0 26-28 36H448q-28-10-28-36z"/><circle cx="503" cy="430" r="43"/><circle cx="503" cy="430" r="15"/><path d="M456 430h94"/></g>
+  <g class="partShape" data-part="5"><path d="M190 405h130v70H190z"/><circle cx="220" cy="440" r="20"/><path d="M240 420l50 40M290 420l-50 40"/></g>
+  <g class="partShape" data-part="6"><path d="M660 402h110q20 0 25 20v42q-5 20-25 20H660z"/><path d="M690 415q30 15 0 55M720 415q30 15 0 55"/></g>
+  <g class="partShape" data-part="7"><path d="M440 520h120q18 0 18 18v42q0 18-18 18H440q-18 0-18-18v-42q0-18 18-18z"/><path d="M460 540h80M460 558h80"/></g>
+  <g class="partShape" data-part="8"><path d="M105 250h120v72H105z"/><circle cx="165" cy="286" r="25"/><path d="M165 261v50M140 286h50"/></g>
+  <g class="partShape" data-part="9"><path d="M435 210h135l18 18v48H417v-48z"/><path d="M455 228h95M455 248h95"/></g>
+  <g class="partShape" data-part="10"><path d="M375 505h80v45h-80z"/><path d="M385 505v-30M445 505v-30"/></g>
+  <g class="partShape" data-part="11"><path d="M570 505h80v45h-80z"/><path d="M580 505v-30M640 505v-30"/></g>
+  <g class="partShape" data-part="12"><path d="M295 510h70v40h-70z"/><circle cx="330" cy="530" r="12"/></g>
+  <g class="partShape" data-part="13"><path d="M650 540h90v38h-90z"/><circle cx="670" cy="559" r="10"/><circle cx="720" cy="559" r="10"/></g>
+  <g class="partShape" data-part="14"><path d="M450 600h110l12 12-12 20H450l-12-20z"/><path d="M470 610h70"/></g>
+  <g class="partShape" data-part="15"><path d="M265 225h60v40h-60z"/><path d="M275 235l40 20M315 235l-40 20"/></g>
+  <g class="partShape" data-part="16"><path d="M685 225h60v40h-60z"/><path d="M695 235l40 20M735 235l-40 20"/></g>
+  <g class="partShape" data-part="17"><circle cx="335" cy="380" r="30"/><circle cx="335" cy="380" r="10"/></g>
+  <g class="partShape" data-part="18"><circle cx="670" cy="380" r="30"/><circle cx="670" cy="380" r="10"/></g>
+  <g class="partShape" data-part="19"><path d="M470 115v-35h60v35"/><path d="M480 80h40"/></g>
+  <g class="partShape" data-part="20"><path d="M455 350h95v25h-95z"/><path d="M465 350v-20M540 350v-20"/></g>
+  <g class="partShape" data-part="21"><path d="M610 470h50v50h-50z"/><path d="M620 480l30 30M650 480l-30 30"/></g>
+  <g class="partShape" data-part="22"><path d="M325 470h50v50h-50z"/><path d="M335 480l30 30M365 480l-30 30"/></g>
+  <g class="partShape" data-part="23"><path d="M740 300h80v45h-80z"/><path d="M750 312h60M750 327h60"/></g>
+  <g class="partShape" data-part="24"><path d="M170 340h90v40h-90z"/><path d="M185 352h60M185 367h60"/></g>
+</g>
+          <g id="callouts"><g class="callout" data-part="1"><circle cx="650" cy="100" r="20"/><text x="650" y="107">1</text></g><g class="callout" data-part="2"><circle cx="300" cy="260" r="20"/><text x="300" y="267">2</text></g><g class="callout" data-part="3"><circle cx="735" cy="255" r="20"/><text x="735" y="262">3</text></g><g class="callout" data-part="4"><circle cx="640" cy="430" r="20"/><text x="640" y="437">4</text></g><g class="callout" data-part="5"><circle cx="165" cy="400" r="20"/><text x="165" y="407">5</text></g><g class="callout" data-part="6"><circle cx="820" cy="405" r="20"/><text x="820" y="412">6</text></g><g class="callout" data-part="7"><circle cx="615" cy="520" r="20"/><text x="615" y="527">7</text></g><g class="callout" data-part="8"><circle cx="85" cy="245" r="20"/><text x="85" y="252">8</text></g><g class="callout" data-part="9"><circle cx="405" cy="210" r="20"/><text x="405" y="217">9</text></g><g class="callout" data-part="10"><circle cx="350" cy="500" r="20"/><text x="350" y="507">10</text></g><g class="callout" data-part="11"><circle cx="665" cy="500" r="20"/><text x="665" y="507">11</text></g><g class="callout" data-part="12"><circle cx="275" cy="500" r="20"/><text x="275" y="507">12</text></g><g class="callout" data-part="13"><circle cx="760" cy="540" r="20"/><text x="760" y="547">13</text></g><g class="callout" data-part="14"><circle cx="585" cy="610" r="20"/><text x="585" y="617">14</text></g><g class="callout" data-part="15"><circle cx="250" cy="215" r="20"/><text x="250" y="222">15</text></g><g class="callout" data-part="16"><circle cx="765" cy="215" r="20"/><text x="765" y="222">16</text></g><g class="callout" data-part="17"><circle cx="300" cy="365" r="20"/><text x="300" y="372">17</text></g><g class="callout" data-part="18"><circle cx="705" cy="365" r="20"/><text x="705" y="372">18</text></g><g class="callout" data-part="19"><circle cx="545" cy="70" r="20"/><text x="545" y="77">19</text></g><g class="callout" data-part="20"><circle cx="450" cy="350" r="20"/><text x="450" y="357">20</text></g><g class="callout" data-part="21"><circle cx="675" cy="475" r="20"/><text x="675" y="482">21</text></g><g class="callout" data-part="22"><circle cx="300" cy="475" r="20"/><text x="300" y="482">22</text></g><g class="callout" data-part="23"><circle cx="830" cy="290" r="20"/><text x="830" y="297">23</text></g><g class="callout" data-part="24"><circle cx="145" cy="330" r="20"/><text x="145" y="337">24</text></g></g></svg>
       </div>
     </div>
   </div>
@@ -145,14 +151,30 @@ const recentEl=document.getElementById("recent");renderRecent();searchInput.addE
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 
 const COMPONENTS=[
- {id:1,name:"Air Cleaner",part:"Reference 1",desc:"Air intake / filter assembly"},
- {id:2,name:"Carburetor",part:"Reference 2",desc:"Fuel metering assembly"},
- {id:3,name:"Cylinder",part:"Reference 3",desc:"Cylinder / upper engine assembly"},
- {id:4,name:"Crankcase",part:"Reference 4",desc:"Main crankcase assembly"},
- {id:5,name:"Starter",part:"Reference 5",desc:"Electric starter assembly"},
- {id:6,name:"Muffler",part:"Reference 6",desc:"Exhaust assembly"},
- {id:7,name:"Oil Filter",part:"Reference 7",desc:"Lubrication filter"},
- {id:8,name:"Fuel Pump",part:"Reference 8",desc:"Fuel delivery assembly"}
+{id:1,name:"Air Cleaner",part:"Reference 1",desc:"Air intake / filter housing"},
+{id:2,name:"Carburetor",part:"Reference 2",desc:"Fuel metering assembly"},
+{id:3,name:"Cylinder",part:"Reference 3",desc:"Cylinder assembly"},
+{id:4,name:"Crankcase",part:"Reference 4",desc:"Main crankcase"},
+{id:5,name:"Starter",part:"Reference 5",desc:"Electric starter"},
+{id:6,name:"Muffler",part:"Reference 6",desc:"Exhaust assembly"},
+{id:7,name:"Oil Filter",part:"Reference 7",desc:"Lubrication filter"},
+{id:8,name:"Fuel Pump",part:"Reference 8",desc:"Fuel delivery assembly"},
+{id:9,name:"Intake Manifold",part:"Reference 9",desc:"Air/fuel intake manifold"},
+{id:10,name:"Left Valve Cover",part:"Reference 10",desc:"Valve cover"},
+{id:11,name:"Right Valve Cover",part:"Reference 11",desc:"Valve cover"},
+{id:12,name:"Oil Dipstick",part:"Reference 12",desc:"Oil level indicator"},
+{id:13,name:"Flywheel",part:"Reference 13",desc:"Flywheel assembly"},
+{id:14,name:"Oil Pan",part:"Reference 14",desc:"Lubrication sump"},
+{id:15,name:"Left Cylinder Head",part:"Reference 15",desc:"Cylinder head assembly"},
+{id:16,name:"Right Cylinder Head",part:"Reference 16",desc:"Cylinder head assembly"},
+{id:17,name:"Left Ignition Coil",part:"Reference 17",desc:"Ignition coil"},
+{id:18,name:"Right Ignition Coil",part:"Reference 18",desc:"Ignition coil"},
+{id:19,name:"Spark Plug",part:"Reference 19",desc:"Ignition component"},
+{id:20,name:"Governor Linkage",part:"Reference 20",desc:"Speed-control linkage"},
+{id:21,name:"Left Pushrod Cover",part:"Reference 21",desc:"Valve-train cover"},
+{id:22,name:"Right Pushrod Cover",part:"Reference 22",desc:"Valve-train cover"},
+{id:23,name:"Exhaust Header",part:"Reference 23",desc:"Exhaust connection"},
+{id:24,name:"Fuel Line Assembly",part:"Reference 24",desc:"Fuel delivery line"}
 ];
 let diagramScale=1,diagramX=0,diagramY=0,dragState=null,selectedPartId=0;
 function openDiagram(){showScreen("diagram");let e=DB[currentEngine];diagramSubtitle.textContent=`${e.maker} ${e.model} • interactive parts workspace`;renderComponents();resetDiagram();selectPart(0)}
