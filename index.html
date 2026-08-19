@@ -721,7 +721,8 @@ function renderRecent(){let list=recent.map(i=>DB[i]).filter(Boolean);cards(list
 const recentEl=document.getElementById("recent");renderRecent();searchInput.addEventListener("keydown",e=>{if(e.key==="Enter")doSearch()});searchInput2.addEventListener("keydown",e=>{if(e.key==="Enter")doSearch2()});
 renderMfg();
 showScreen("manufacturerDiagrams");
-if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+// Clean build: no service worker. GitHub Pages serves the current files directly.
+
 
 const COMPONENTS=[{id:1,name:"Air Cleaner Assembly",part:"Reference 1",desc:"Air cleaner cover, base and intake assembly"},{id:2,name:"Carburetor Assembly",part:"Reference 2",desc:"Fuel metering assembly"},{id:3,name:"Intake Manifold",part:"Reference 3",desc:"Air intake manifold"},{id:4,name:"Cylinder Head (LH)",part:"Reference 4",desc:"Left cylinder head"},{id:5,name:"Cylinder Head (RH)",part:"Reference 5",desc:"Right cylinder head"},{id:6,name:"Spark Plug",part:"Reference 6",desc:"Ignition component"},{id:7,name:"Crankcase",part:"Reference 7",desc:"Main crankcase assembly"},{id:8,name:"Piston (LH)",part:"Reference 8",desc:"Piston and ring set"},{id:9,name:"Piston (RH)",part:"Reference 9",desc:"Piston and ring set"},{id:10,name:"Connecting Rod (LH)",part:"Reference 10",desc:"Connecting rod assembly"},{id:11,name:"Connecting Rod (RH)",part:"Reference 11",desc:"Connecting rod assembly"},{id:12,name:"Crankshaft",part:"Reference 12",desc:"Crankshaft assembly"},{id:13,name:"Oil Pan",part:"Reference 13",desc:"Lubrication sump"},{id:14,name:"Flywheel",part:"Reference 14",desc:"Flywheel assembly"},{id:15,name:"Starter Motor",part:"Reference 15",desc:"Electric starter assembly"},{id:16,name:"Muffler",part:"Reference 16",desc:"Exhaust silencer"},{id:17,name:"Oil Filter",part:"Reference 17",desc:"Lubrication filter"},{id:18,name:"Fuel Pump",part:"Reference 18",desc:"Fuel delivery pump"},{id:19,name:"Intake Elbow",part:"Reference 19",desc:"Intake elbow"},{id:20,name:"Valve Springs",part:"Reference 20",desc:"Valve train springs"},{id:21,name:"Rocker Arm (LH)",part:"Reference 21",desc:"Valve train rocker arm"},{id:22,name:"Rocker Arm (RH)",part:"Reference 22",desc:"Valve train rocker arm"},{id:23,name:"Governor Assembly",part:"Reference 23",desc:"Speed control assembly"},{id:24,name:"Fuel Line Assembly",part:"Reference 24",desc:"Fuel delivery line"},{id:25,name:"Head Gasket",part:"Reference 25",desc:"Cylinder head gasket"},{id:26,name:"Mounting Hardware",part:"Reference 26",desc:"Engine mounting hardware"},{id:27,name:"Exhaust Header",part:"Reference 27",desc:"Exhaust connection"},{id:28,name:"Air Filter Element",part:"Reference 28",desc:"Filter element"},{id:29,name:"Oil Pump",part:"Reference 29",desc:"Lubrication pump"},{id:30,name:"Dipstick",part:"Reference 30",desc:"Oil level indicator"}];
 let diagramScale=1,diagramX=0,diagramY=0,dragState=null,selectedPartId=0;
@@ -788,13 +789,13 @@ const MFG_DIAGRAMS=[
 ];
 let mfgIndex=0,mfgScale=1,mfgX=0,mfgY=0,mfgDrag=null;
 function openManufacturerDiagrams(){showScreen('manufacturerDiagrams');mfgIndex=0;renderMfg();mfgFit()}
-function openManufacturerManual(){window.open('assets/kohler_cv730/Kohler_CV620_CV730_Service_Manual.pdf','_blank')}
+function openManufacturerManual(){window.open('https://raw.githubusercontent.com/aaronluke111400-gif/Small-engine-pro/main/Kohler_CV620_CV730_Service_Manual.pdf','_blank')}
 function renderMfg(){
  let d=MFG_DIAGRAMS[mfgIndex],img=document.getElementById('mfgImage'); if(!img)return;
- img.src='assets/kohler_cv730/page-'+d[0]+'.png';
+ img.src='https://raw.githubusercontent.com/aaronluke111400-gif/Small-engine-pro/main/page-'+d[0]+'.png';
  document.getElementById('mfgPageTitle').textContent='Page '+d[0];
  document.getElementById('mfgPageCaption').textContent=d[1];
- document.getElementById('mfgThumbs').innerHTML=MFG_DIAGRAMS.map((x,i)=>`<button class="mfgThumb ${i===mfgIndex?'active':''}" onclick="mfgIndex=${i};renderMfg();mfgFit()"><img src="assets/kohler_cv730/page-${x[0]}.png"><span>p.${x[0]}</span></button>`).join('');
+ document.getElementById('mfgThumbs').innerHTML=MFG_DIAGRAMS.map((x,i)=>`<button class="mfgThumb ${i===mfgIndex?'active':''}" onclick="mfgIndex=${i};renderMfg();mfgFit()"><img src="https://raw.githubusercontent.com/aaronluke111400-gif/Small-engine-pro/main/page-${x[0]}.png"><span>p.${x[0]}</span></button>`).join('');
  let sel=document.getElementById('mfgSelect'); if(sel) sel.innerHTML=MFG_DIAGRAMS.map((x,i)=>`<option value="${i}" ${i===mfgIndex?'selected':''}>p.${x[0]} — ${x[1]}</option>`).join('');
 }
 function mfgApply(){let w=document.getElementById('mfgImageWrap');if(w)w.style.transform=`translate(calc(-50% + ${mfgX}px),calc(-50% + ${mfgY}px)) scale(${mfgScale})`}
@@ -803,5 +804,34 @@ function mfgZoom(f){mfgScale=Math.min(5,Math.max(.35,mfgScale*f));mfgApply()}
 function mfgPrev(){mfgIndex=(mfgIndex-1+MFG_DIAGRAMS.length)%MFG_DIAGRAMS.length;renderMfg();mfgFit()}
 function mfgNext(){mfgIndex=(mfgIndex+1)%MFG_DIAGRAMS.length;renderMfg();mfgFit()}
 (function(){let c=document.getElementById('mfgCanvas');if(!c)return;c.addEventListener('pointerdown',e=>{mfgDrag={x:e.clientX,y:e.clientY,ox:mfgX,oy:mfgY};document.getElementById('mfgImageWrap').classList.add('dragging');c.setPointerCapture(e.pointerId)});c.addEventListener('pointermove',e=>{if(!mfgDrag)return;mfgX=mfgDrag.ox+e.clientX-mfgDrag.x;mfgY=mfgDrag.oy+e.clientY-mfgDrag.y;mfgApply()});c.addEventListener('pointerup',()=>{mfgDrag=null;document.getElementById('mfgImageWrap').classList.remove('dragging')});c.addEventListener('wheel',e=>{e.preventDefault();mfgZoom(e.deltaY<0?1.12:.89)},{passive:false})})();
+
+// Real manufacturer image viewer: drag + wheel + pinch zoom.
+(function(){
+  const c=document.getElementById('mfgCanvas'), w=document.getElementById('mfgImageWrap');
+  if(!c||!w) return;
+  let pinchStartDist=null, pinchStartScale=1, pinchMid=null;
+  c.addEventListener('touchstart',e=>{
+    if(e.touches.length===2){
+      const a=e.touches[0],b=e.touches[1];
+      pinchStartDist=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);
+      pinchStartScale=mfgScale;
+      pinchMid={x:(a.clientX+b.clientX)/2,y:(a.clientY+b.clientY)/2};
+      mfgDrag=null;
+    }
+  },{passive:true});
+  c.addEventListener('touchmove',e=>{
+    if(e.touches.length!==2 || !pinchStartDist) return;
+    const a=e.touches[0],b=e.touches[1];
+    const dist=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);
+    mfgScale=Math.min(5,Math.max(.35,pinchStartScale*(dist/pinchStartDist)));
+    const mid={x:(a.clientX+b.clientX)/2,y:(a.clientY+b.clientY)/2};
+    if(pinchMid){mfgX+=mid.x-pinchMid.x;mfgY+=mid.y-pinchMid.y;pinchMid=mid;}
+    mfgApply();
+  },{passive:true});
+  c.addEventListener('touchend',e=>{
+    if(e.touches.length<2){pinchStartDist=null;pinchMid=null;}
+  },{passive:true});
+})();
+
 </script>
 </body></html>

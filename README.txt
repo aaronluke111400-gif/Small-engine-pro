@@ -1,9 +1,31 @@
-Small Engine Pro — Real Manufacturer Diagram First Build
+SMALL ENGINE PRO — CLEAN COMPLETE BUILD
 
-IMPORTANT: This build changes the app's default Parts experience. When opened, it goes directly to the actual Kohler CV620-CV730 manufacturer exploded-diagram viewer.
+This build removes the old service-worker/cache dependency.
 
-The Parts tab also opens the manufacturer viewer directly.
+The real Kohler CV730 manufacturer diagram pages and service manual are loaded
+from the existing GitHub repository using their direct raw file URLs. This avoids
+the previous assets/kohler_cv730 path mismatch.
 
-The viewer includes 11 locally bundled diagram-page images extracted from the official Kohler service manual, with zoom, pan, page selection, thumbnails, and manual access.
+Included:
+- index.html
+- manifest.webmanifest
+- Real Kohler diagram viewer
+- Zoom, drag/pan, page navigation, thumbnails
+- Pinch-to-zoom on iPhone/iPad
+- Interactive overlay remains available
+- No sw.js required
 
-The previous generic interactive illustration is retained only as an optional Interactive Overlay view.
+GITHUB INSTALL:
+1. Back up your current repository first if desired.
+2. Replace the repository's index.html with this index.html.
+3. Replace manifest.webmanifest with the included manifest.webmanifest.
+4. Do NOT upload or modify sw.js. If sw.js is still in the repository, delete it.
+5. Keep the existing page-58.png, page-60.png, page-62.png, page-63.png,
+   page-65.png, page-66.png, page-68.png, page-75.png, page-79.png,
+   page-80.png, page-85.png, and the Kohler PDF in the repository root.
+6. Commit the changes and wait for GitHub Pages to deploy.
+
+IMPORTANT:
+This build deliberately uses direct raw GitHub URLs for the diagram files.
+That is what makes the diagram viewer work regardless of where the images sit
+inside the site folders. No additional path editing is needed.

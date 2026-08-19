@@ -1,16 +1,9 @@
 {
   "name": "Small Engine Pro",
   "short_name": "Engine Pro",
-  "start_url": ".",
+  "start_url": "./",
   "display": "standalone",
-  "background_color": "#f4f6f8",
-  "theme_color": "#0b1220",
-  "description": "Private small-engine reference and equipment tracker.",
-  "icons": [
-    {
-      "src": "icon-180.png",
-      "sizes": "180x180",
-      "type": "image/png"
-    }
-  ]
+  "background_color": "#07101f",
+  "theme_color": "#07101f",
+  "description": "Identify, repair, maintain and track small engines."
 }
