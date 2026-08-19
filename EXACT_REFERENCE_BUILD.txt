@@ -1,0 +1,16 @@
+Small Engine Pro — Reference-Matched UI Build
+
+The Parts Diagram screen was rebuilt to closely match the user-provided reference:
+- dark navy branded header with search, Scan Engine, Share and Menu
+- centered engine model + Parts Diagram heading
+- Specs / Manuals / Maintenance controls
+- left searchable component drawer
+- large white technical illustration workspace
+- zoom/reset/fit controls
+- 2D/3D toggle styling
+- vertical select/pan/explode/layer/fit tool rail
+- assembled/exploded slider
+- detailed selected-part information card
+- dark six-item bottom navigation
+
+The engine illustration remains original technical vector artwork. Exact manufacturer-specific geometry, labels, OEM numbers, pricing and availability should be populated only from permitted/authorized data sources.

@@ -1,0 +1,21 @@
+Small Engine Pro — Detailed Illustration V2
+
+Added a second fine-detail technical layer over the 30 selectable components:
+- cooling fins
+- piston rings and wrist pins
+- crankshaft counterweights
+- bearing housings
+- connecting-rod machining
+- flywheel ring gear teeth
+- starter gear detail
+- muffler seams/end cap
+- oil-filter pleats
+- valve-spring coils
+- rocker pivots
+- governor gear/linkage
+- gasket/bolt patterns
+- casting contours
+- flange fasteners
+- additional intake/exhaust detail
+
+Artwork remains original technical vector artwork rather than a copied manufacturer illustration.
