@@ -1,0 +1,8 @@
+Small Engine Pro — Manufacturer Data
+
+Kohler CV620–CV730 Service Manual
+Official source: https://resources.kohler.com/power/kohler/enginesUS/pdf/24_690_07_EN.pdf
+
+The manual is included for this private, personal build. Kohler's legal statement says material may be downloaded for non-commercial, personal use provided copyright/proprietary notices are retained; it also restricts distribution, modification, reuse, and public/commercial use without written permission.
+
+This build uses the official manual as a reference/document viewer. Exact manufacturer parts illustrations and OEM parts data should be integrated only where the applicable rights/terms permit.
