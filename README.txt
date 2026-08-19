@@ -1,16 +1,14 @@
-Small Engine Pro — polished UI update
+Small Engine Pro — Swipe Drawer + Exploded Assembly Update
 
-This version adds:
-- Dedicated engine pages
-- Dedicated Sources page
-- Dedicated Parts screen
-- Dedicated Search screen
-- App-like bottom navigation
-- Polished responsive mobile-first design
-- Engine quick actions
-- Recent engines
-- Scan-tag capture screen
-- Equipment + repair cost/profit tracking
-- PWA/offline shell
+Added:
+- Swipe-out component drawer on iPhone
+- Edge swipe gesture to open/close component list
+- Drawer overlay and close control
+- Searchable component list
+- Selecting a component highlights it and closes drawer on mobile
+- Tap diagram callouts to select parts
+- Zoom, pan, reset and fit controls
+- Assembled ↔ Exploded slider that separates prototype component groups while preserving relative layout
+- Mobile-first diagram workspace
 
-Manufacturer diagrams remain linked to official sources; the app does not bulk-copy copyrighted catalogs.
+The included diagram is an interaction prototype. Real manufacturer diagrams and exact OEM data must be connected through authorized/licensed sources or permitted diagram files.

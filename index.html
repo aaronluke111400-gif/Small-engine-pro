@@ -16,6 +16,13 @@ main{max-width:920px;margin:auto;padding:18px}.screen{display:none}.screen.activ
 .bottom{position:fixed;bottom:0;left:0;right:0;background:#ffffffee;backdrop-filter:blur(16px);border-top:1px solid var(--line);z-index:30;padding:8px max(10px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom))}.bottomin{max-width:700px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr)}.navbtn{background:none;border:0;color:#667085;padding:6px 2px;font-size:11px;font-weight:750}.navbtn span{display:block;font-size:20px;line-height:23px;margin-bottom:2px}.navbtn.active{color:var(--blue)}
 .empty{text-align:center;padding:28px;color:var(--muted)}.camera{border:2px dashed #cbd5e1;border-radius:18px;padding:25px;text-align:center}.camera input{display:none}.camera label{display:block;font-weight:800;color:var(--blue);cursor:pointer}.photo{width:100%;border-radius:15px;margin-top:12px;display:none}.money{font-size:26px;font-weight:850}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:600px){main{padding:14px}.actions{grid-template-columns:repeat(2,1fr)}.grid,.two{grid-template-columns:1fr}.search{flex-direction:column}.search .btn{width:100%}}
+
+.diagramToolbar{display:flex;gap:8px;margin:10px 0}.diagramLayout{display:grid;grid-template-columns:250px 1fr;gap:10px}.componentPanel,.diagramCanvas{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.componentPanel{padding:10px;max-height:540px;overflow:auto}.componentItem{padding:12px;border-radius:12px;margin:5px 0;cursor:pointer;border:1px solid transparent}.componentItem:hover,.componentItem.selected{background:var(--blue2);border-color:#bfdbfe}.componentItem b{display:block}.componentItem span{font-size:12px;color:var(--muted)}.diagramCanvas{height:540px;overflow:hidden;touch-action:none;position:relative;background:var(--surface2)}.diagramViewport{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transform-origin:center;will-change:transform;cursor:grab}.diagramViewport.dragging{cursor:grabbing}.diagramViewport svg{width:92%;height:92%;overflow:visible}.partShape rect{fill:#e2e8f0;stroke:#64748b;stroke-width:3}.partShape text{fill:#334155;font-size:20px;font-weight:800;text-anchor:middle}.callout circle{fill:#2563eb;stroke:#fff;stroke-width:4;cursor:pointer}.callout text{fill:#fff;font-size:18px;font-weight:900;text-anchor:middle}.partShape.selected rect{fill:#dbeafe;stroke:#2563eb;stroke-width:7;filter:url(#glow)}.callout.selected circle{fill:#16a34a;stroke:#fff;stroke-width:6}.selectedPart h2{margin:0 0 5px}.selectedPart .partmeta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.partmeta .spec{background:var(--surface2)}@media(max-width:700px){.diagramLayout{grid-template-columns:1fr}.componentPanel{max-height:180px;order:2}.diagramCanvas{height:420px;order:1}.selectedPart{order:3}}
+
+.drawerToggle{display:none;border:1px solid #d0d5dd;background:var(--surface);color:var(--text);border-radius:13px;padding:11px 14px;font-weight:800;margin:0 0 9px}.drawerOverlay{display:none}.drawerHeader{display:none}.iconbtn.light{background:var(--surface2);color:var(--text);border-color:var(--line);width:34px;height:34px}.explodeBar{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px 13px;margin:9px 0;box-shadow:var(--shadow);font-size:12px;font-weight:750}.explodeBar input{flex:1;accent-color:var(--blue)}.explodeBar b{min-width:34px;text-align:right;color:var(--blue)}.swipeHint{display:none;position:absolute;left:12px;bottom:12px;background:#0b1220dd;color:#fff;border-radius:999px;padding:7px 10px;font-size:11px;z-index:3}
+@media(max-width:700px){
+  .drawerToggle{display:block}.diagramLayout{display:block;position:relative}.componentPanel{position:fixed;z-index:60;left:0;top:0;bottom:0;width:min(84vw,330px);max-height:none;border-radius:0 22px 22px 0;padding:12px;transform:translateX(-105%);transition:transform .24s ease;overflow:auto}.componentPanel.open{transform:translateX(0)}.drawerHeader{display:flex;align-items:center;justify-content:space-between;padding:3px 2px 12px}.drawerOverlay{position:fixed;inset:0;background:#0008;z-index:55}.drawerOverlay.show{display:block}.swipeHint{display:block}.diagramCanvas{height:calc(100vh - 300px);min-height:380px}.selectedPart{margin-bottom:12px}.explodeBar{position:sticky;bottom:76px;z-index:10}.diagramToolbar{justify-content:center}
+}
 </style>
 </head>
 <body>
@@ -43,6 +50,54 @@ main{max-width:920px;margin:auto;padding:18px}.screen{display:none}.screen.activ
 
 <section id="equipment" class="screen"><div class="hero"><h1>My Equipment</h1><p>Your machines, repair costs and profit.</p></div><div class="card"><div class="two"><input class="input" id="eqName" placeholder="Equipment name"><input class="input" id="eqEngine" placeholder="Engine model/spec"><input class="input" id="eqBuy" type="number" step=".01" placeholder="Purchase price"><input class="input" id="eqSale" type="number" step=".01" placeholder="Sale price"></div><br><button class="btn primary wide" onclick="addEquipment()">Add Equipment</button></div><div id="equipmentList"></div></section>
 
+
+<section id="diagram" class="screen">
+  <button class="back" onclick="openEngine(currentEngine)">‹ Back to engine</button>
+  <div class="hero"><h1>Parts Diagram</h1><p id="diagramSubtitle">Interactive exploded-view workspace</p></div>
+  <button class="drawerToggle" id="drawerToggle" onclick="toggleComponentDrawer()">☰ Components</button><div class="drawerOverlay" id="drawerOverlay" onclick="closeComponentDrawer()"></div><div class="diagramToolbar">
+    <button class="btn" onclick="zoomDiagram(1.2)">＋</button>
+    <button class="btn" onclick="zoomDiagram(.8)">−</button>
+    <button class="btn" onclick="resetDiagram()">Reset</button>
+    <button class="btn" onclick="fitDiagram()">Fit</button>
+  </div>
+  <div class="explodeBar"><span>Assembled</span><input id="explodeSlider" type="range" min="0" max="100" value="0" oninput="setExplode(this.value)"><span>Exploded</span><b id="explodeValue">0%</b></div><div class="diagramLayout">
+    <aside class="componentPanel" id="componentDrawer"><div class="drawerHeader"><b>Components</b><button class="iconbtn light" onclick="closeComponentDrawer()">×</button></div>
+      <input class="input" id="componentSearch" placeholder="Search components…" oninput="filterComponents()">
+      <div id="componentList"></div>
+    </aside>
+    <div class="diagramCanvas" id="diagramCanvas"><div class="swipeHint">← Swipe from edge for components</div>
+      <div class="diagramViewport" id="diagramViewport">
+        <svg id="engineSvg" viewBox="0 0 1000 700" aria-label="Interactive exploded-view schematic">
+          <defs>
+            <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <g id="partsGraphic">
+            <g class="partShape" data-part="1"><rect x="380" y="105" width="240" height="120" rx="18"/><text x="500" y="168">AIR CLEANER</text></g>
+            <g class="partShape" data-part="2"><rect x="315" y="245" width="150" height="105" rx="12"/><text x="390" y="302">CARBURETOR</text></g>
+            <g class="partShape" data-part="3"><rect x="535" y="245" width="150" height="105" rx="12"/><text x="610" y="302">CYLINDER</text></g>
+            <g class="partShape" data-part="4"><rect x="415" y="390" width="170" height="95" rx="14"/><text x="500" y="446">CRANKCASE</text></g>
+            <g class="partShape" data-part="5"><rect x="205" y="395" width="145" height="72" rx="12"/><text x="277" y="438">STARTER</text></g>
+            <g class="partShape" data-part="6"><rect x="650" y="395" width="145" height="72" rx="12"/><text x="722" y="438">MUFFLER</text></g>
+            <g class="partShape" data-part="7"><rect x="410" y="525" width="180" height="65" rx="12"/><text x="500" y="565">OIL FILTER</text></g>
+            <g class="partShape" data-part="8"><rect x="105" y="250" width="125" height="70" rx="12"/><text x="167" y="292">FUEL PUMP</text></g>
+          </g>
+          <g id="callouts">
+            <g class="callout" data-part="1"><circle cx="650" cy="120" r="20"/><text x="650" y="127">1</text></g>
+            <g class="callout" data-part="2"><circle cx="285" cy="270" r="20"/><text x="285" y="277">2</text></g>
+            <g class="callout" data-part="3"><circle cx="715" cy="270" r="20"/><text x="715" y="277">3</text></g>
+            <g class="callout" data-part="4"><circle cx="620" cy="430" r="20"/><text x="620" y="437">4</text></g>
+            <g class="callout" data-part="5"><circle cx="175" cy="430" r="20"/><text x="175" y="437">5</text></g>
+            <g class="callout" data-part="6"><circle cx="825" cy="430" r="20"/><text x="825" y="437">6</text></g>
+            <g class="callout" data-part="7"><circle cx="620" cy="555" r="20"/><text x="620" y="562">7</text></g>
+            <g class="callout" data-part="8"><circle cx="90" cy="250" r="20"/><text x="90" y="257">8</text></g>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div id="selectedPart" class="card selectedPart"><div class="muted">Select a component to highlight it.</div></div>
+  <div class="notice">This viewer is the interactive framework. Manufacturer-specific diagrams should be connected only where Small Engine Pro has authorized/licensed access to the diagram data. Kawasaki's official parts system, for example, provides model-specific diagram pages and downloadable PDFs. citeturn0search0turn0search4</div>
+</section>
 <section id="parts" class="screen"><button class="back" onclick="showScreen('home')">‹ Home</button><div class="hero"><h1>Parts</h1><p>Use the exact engine identification before ordering.</p></div><div class="card"><div class="search"><input class="input" id="partInput" placeholder="OEM part number or keyword"><button class="btn primary" onclick="partSearch()">Search</button></div></div><div id="partsResults"></div></section>
 </main>
 
@@ -67,7 +122,7 @@ function cards(list,target){target.innerHTML=list.length?list.map((e,i)=>`<div c
 function doSearch(){let q=searchInput.value.trim();searchInput2.value=q;showScreen("search");doSearch2()}
 function doSearch2(){let q=searchInput2.value.toLowerCase().trim();let list=DB.filter(e=>(e.maker+" "+e.model+" "+e.family+" "+e.keys).toLowerCase().includes(q)||!q);cards(list,searchResults)}
 function openEngine(i){currentEngine=i;let e=DB[i];if(!recent.includes(i)){recent.unshift(i);recent=recent.slice(0,5);localStorage.setItem("sep_recent",JSON.stringify(recent))}showScreen("engine");enginePage.innerHTML=`<div class="engineHead"><span class="maker">${e.maker}</span><h1>${e.model}</h1><p>${e.family}</p><div style="margin-top:10px"><span class="pill warning">🟡 Exact match requires ${e.id.join(", ")}</span></div></div>
-<div class="actions"><button class="action" onclick="engineSection('spec')"><div>📋</div>Specs</button><button class="action" onclick="engineSection('parts')"><div>🧩</div>Parts</button><button class="action" onclick="engineSection('service')"><div>🛢️</div>Service</button><button class="action" onclick="engineSection('manual')"><div>📖</div>Manuals</button></div>
+<div class="actions"><button class="action" onclick="engineSection('spec')"><div>📋</div>Specs</button><button class="action" onclick="openDiagram()"><div>🧩</div>Parts</button><button class="action" onclick="engineSection('service')"><div>🛢️</div>Service</button><button class="action" onclick="engineSection('manual')"><div>📖</div>Manuals</button></div>
 <div id="engineSection"><div class="sectionTitle">Overview</div><div class="card"><div class="grid">${Object.entries(e.specs).map(([k,v])=>`<div class="spec"><div class="label">${k}</div><div class="value">${v}</div></div>`).join("")}</div></div>
 <div class="sectionTitle">Identification</div><div class="card"><div class="grid">${e.id.map(x=>`<div class="spec"><div class="label">${x}</div><div class="value">Required for exact fitment</div></div>`).join("")}</div><div class="notice" style="margin-top:10px">Small Engine Pro will not label a part as an exact fit until the engine identification is verified.</div></div>
 <div class="sectionTitle">Manufacturer sources</div><div class="card"><div class="sourceRow"><div><b>Official sources</b><span class="muted small">Manuals, diagrams and parts catalogs</span></div><button class="btn" onclick="openSources()">View ›</button></div></div></div>`}
@@ -88,5 +143,60 @@ function removeEq(i){equipment.splice(i,1);localStorage.setItem("sep_eq",JSON.st
 function renderRecent(){let list=recent.map(i=>DB[i]).filter(Boolean);cards(list,recentEl)}
 const recentEl=document.getElementById("recent");renderRecent();searchInput.addEventListener("keydown",e=>{if(e.key==="Enter")doSearch()});searchInput2.addEventListener("keydown",e=>{if(e.key==="Enter")doSearch2()});
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+
+const COMPONENTS=[
+ {id:1,name:"Air Cleaner",part:"Reference 1",desc:"Air intake / filter assembly"},
+ {id:2,name:"Carburetor",part:"Reference 2",desc:"Fuel metering assembly"},
+ {id:3,name:"Cylinder",part:"Reference 3",desc:"Cylinder / upper engine assembly"},
+ {id:4,name:"Crankcase",part:"Reference 4",desc:"Main crankcase assembly"},
+ {id:5,name:"Starter",part:"Reference 5",desc:"Electric starter assembly"},
+ {id:6,name:"Muffler",part:"Reference 6",desc:"Exhaust assembly"},
+ {id:7,name:"Oil Filter",part:"Reference 7",desc:"Lubrication filter"},
+ {id:8,name:"Fuel Pump",part:"Reference 8",desc:"Fuel delivery assembly"}
+];
+let diagramScale=1,diagramX=0,diagramY=0,dragState=null,selectedPartId=0;
+function openDiagram(){showScreen("diagram");let e=DB[currentEngine];diagramSubtitle.textContent=`${e.maker} ${e.model} • interactive parts workspace`;renderComponents();resetDiagram();selectPart(0)}
+function renderComponents(){let q=(componentSearch.value||"").toLowerCase();componentList.innerHTML=COMPONENTS.filter(p=>(p.name+" "+p.desc+" "+p.part).toLowerCase().includes(q)).map(p=>`<div class="componentItem ${selectedPartId===p.id?"selected":""}" onclick="selectPart(${p.id})"><b>${p.id} — ${p.name}</b><span>${p.desc}</span></div>`).join("")}
+
+let drawerOpen=false, touchStartX=0, touchStartY=0;
+function openComponentDrawer(){drawerOpen=true;document.getElementById("componentDrawer").classList.add("open");document.getElementById("drawerOverlay").classList.add("show")}
+function closeComponentDrawer(){drawerOpen=false;document.getElementById("componentDrawer").classList.remove("open");document.getElementById("drawerOverlay").classList.remove("show")}
+function toggleComponentDrawer(){drawerOpen?closeComponentDrawer():openComponentDrawer()}
+function setExplode(v){
+  document.getElementById("explodeValue").textContent=v+"%";
+  const amount=Number(v)/100;
+  const moves={1:[0,-35],2:[-55,-18],3:[55,-18],4:[0,42],5:[-70,25],6:[70,25],7:[-35,72],8:[-95,-15]};
+  document.querySelectorAll("#partsGraphic .partShape").forEach(g=>{
+    const id=Number(g.dataset.part),m=moves[id]||[0,0];
+    g.style.transform=`translate(${m[0]*amount}px,${m[1]*amount}px)`;
+  });
+  document.querySelectorAll("#callouts .callout").forEach(g=>{
+    const id=Number(g.dataset.part),m=moves[id]||[0,0];
+    g.style.transform=`translate(${m[0]*amount}px,${m[1]*amount}px)`;
+  });
+}
+function selectPartAndClose(id){selectPart(id);closeComponentDrawer()}
+function diagramTouchStart(e){const t=e.touches[0];touchStartX=t.clientX;touchStartY=t.clientY}
+function diagramTouchEnd(e){
+  const t=e.changedTouches[0],dx=t.clientX-touchStartX,dy=t.clientY-touchStartY;
+  if(Math.abs(dx)>70 && Math.abs(dx)>Math.abs(dy)){
+    if(dx>0 && touchStartX<80) openComponentDrawer();
+    if(dx<0 && drawerOpen) closeComponentDrawer();
+  }
+}
+
+function filterComponents(){renderComponents()}
+function selectPart(id){selectedPartId=id;document.querySelectorAll(".partShape,.callout").forEach(x=>x.classList.toggle("selected",x.dataset.part==id));renderComponents();let p=COMPONENTS.find(x=>x.id===id);document.getElementById("selectedPart").innerHTML=p?`<h2>${p.name}</h2><div class="muted">${p.desc}</div><div class="partmeta"><div class="spec"><div class="label">Diagram reference</div><div class="value">${p.part}</div></div><div class="spec"><div class="label">OEM part number</div><div class="value">Requires exact spec</div></div></div><div class="notice" style="margin-top:12px">Once an authorized manufacturer diagram feed is connected, this panel will show the exact OEM number, quantity and fitment for the selected reference.</div>`:`<div class="muted">Select a component to highlight it.</div>`}
+function applyDiagramTransform(){diagramViewport.style.transform=`translate(${diagramX}px,${diagramY}px) scale(${diagramScale})`}
+function zoomDiagram(f){diagramScale=Math.min(4,Math.max(.55,diagramScale*f));applyDiagramTransform()}
+function resetDiagram(){diagramScale=1;diagramX=0;diagramY=0;applyDiagramTransform();document.getElementById("explodeSlider").value=0;setExplode(0)}
+function fitDiagram(){resetDiagram()}
+document.addEventListener("click",e=>{let c=e.target.closest(".callout");if(c)selectPart(+c.dataset.part);let s=e.target.closest(".partShape");if(s)selectPart(+s.dataset.part)})
+diagramViewport.addEventListener("pointerdown",e=>{dragState={x:e.clientX,y:e.clientY,ox:diagramX,oy:diagramY};diagramViewport.classList.add("dragging");diagramViewport.setPointerCapture(e.pointerId)})
+diagramViewport.addEventListener("pointermove",e=>{if(!dragState)return;diagramX=dragState.ox+(e.clientX-dragState.x);diagramY=dragState.oy+(e.clientY-dragState.y);applyDiagramTransform()})
+diagramViewport.addEventListener("pointerup",()=>{dragState=null;diagramViewport.classList.remove("dragging")})
+diagramCanvas.addEventListener("touchstart",diagramTouchStart,{passive:true});diagramCanvas.addEventListener("touchend",diagramTouchEnd,{passive:true});diagramCanvas.addEventListener("wheel",e=>{e.preventDefault();zoomDiagram(e.deltaY<0?1.1:.9)},{passive:false})
+const _oldOpenEngine=openEngine;
+openEngine=function(i){_oldOpenEngine(i);let old=document.querySelector('#engineSection .action');}
 </script>
 </body></html>
