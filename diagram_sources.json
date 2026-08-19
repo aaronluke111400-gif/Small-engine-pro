@@ -1,0 +1,21 @@
+{
+  "feature": "official_parts_diagrams",
+  "sources": [
+    {
+      "manufacturer": "Briggs & Stratton",
+      "url": "https://shop.briggsandstratton.com/pages/parts-lookup"
+    },
+    {
+      "manufacturer": "Kawasaki Engines",
+      "url": "https://www.kawasaki.com/en-us/owner-center/parts"
+    },
+    {
+      "manufacturer": "Kohler Engines",
+      "url": "https://partners.kohlerengines.com/App/SparepartCatalogue_2.0/Default/Catalogue.aspx"
+    },
+    {
+      "manufacturer": "Honda Engines",
+      "url": "https://engines.honda.com/support-and-service"
+    }
+  ]
+}
