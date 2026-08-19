@@ -1,19 +1,16 @@
-Small Engine Pro — Final web-app package
+Small Engine Pro — polished UI update
 
-Open index.html for the complete offline-capable web UI.
-For iPhone Home Screen installation, these files must be served from an HTTPS web address.
-The app intentionally routes to official manufacturer sources instead of copying entire copyrighted catalogs.
+This version adds:
+- Dedicated engine pages
+- Dedicated Sources page
+- Dedicated Parts screen
+- Dedicated Search screen
+- App-like bottom navigation
+- Polished responsive mobile-first design
+- Engine quick actions
+- Recent engines
+- Scan-tag capture screen
+- Equipment + repair cost/profit tracking
+- PWA/offline shell
 
-Current features:
-- Engine search
-- Manufacturer-aware exact-identification gate
-- Engine-tag camera capture UI
-- Official parts/manual source routing
-- Part search routing
-- My Equipment
-- Repair-cost tracking
-- Purchase/sale/profit calculation
-- Local browser storage
-- PWA manifest/service worker
-
-The next server-side production layer would add OCR, live source connectors, authenticated cloud storage, and a larger verified engine catalog.
+Manufacturer diagrams remain linked to official sources; the app does not bulk-copy copyrighted catalogs.
