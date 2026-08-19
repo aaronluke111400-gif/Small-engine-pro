@@ -1,0 +1,1 @@
+The CV620-CV730 Parts screen now opens the actual Kohler service-manual diagram pages bundled locally under assets/kohler_cv730. Pages included: 58, 60, 62, 63, 65, 66, 68, 75, 79, 80, 85. The viewer supports zoom, pan, thumbnails, page navigation and full-manual access.
