@@ -298,15 +298,11 @@ main{max-width:1500px;margin:auto;padding:0}
   .partButtons{flex-direction:row}.partButtons .btn{flex:1}
   .bottomin{grid-template-columns:repeat(6,1fr)}
 }
+
+.manufacturerViewer{padding:10px!important}.manufacturerTop{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}.mfgBtns{display:flex;gap:5px}.mfgBtns .btn{min-width:38px;padding:7px 9px}.mfgCanvas{height:calc(100vh - 285px);min-height:480px;border:1px solid var(--line);border-radius:9px;background:#eef1f5;overflow:hidden;position:relative;touch-action:none}.mfgImageWrap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(1);transform-origin:center;cursor:grab;will-change:transform}.mfgImageWrap.dragging{cursor:grabbing}.mfgImageWrap img{display:block;max-width:none;width:1000px;height:auto;background:#fff;box-shadow:0 4px 18px rgba(0,0,0,.12)}.mfgThumbs{display:flex;gap:7px;overflow-x:auto;padding:8px 1px}.mfgThumb{flex:0 0 72px;height:92px;background:#fff;border:2px solid transparent;border-radius:7px;padding:2px;overflow:hidden}.mfgThumb.active{border-color:var(--blue)}.mfgThumb img{width:100%;height:100%;object-fit:contain}.mfgThumb span{display:block;font-size:8px;font-weight:800;color:#667085;text-align:center}.mfgThumb img+span{margin-top:-16px;position:relative;background:#fff9}
+@media(max-width:700px){.mfgCanvas{height:calc(100vh - 335px);min-height:400px}.mfgImageWrap img{width:850px}.manufacturerTop{align-items:flex-start}.mfgBtns{flex-wrap:wrap;justify-content:flex-end}}
 </style>
-<style>
-.manualModal{display:none;position:fixed;inset:0;background:rgba(3,9,18,.72);z-index:500;padding:18px}
-.manualModal.show{display:flex;align-items:center;justify-content:center}
-.manualPanel{width:min(1100px,100%);height:min(92vh,900px);background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 20px 70px rgba(0,0,0,.35);display:flex;flex-direction:column}
-.manualHead{height:56px;flex:0 0 56px;background:#07101e;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px}
-.manualHead b{display:block;font-size:14px}.manualHead span{display:block;color:#b8c3d2;font-size:10px;margin-top:2px}.manualClose{width:34px;height:34px;border:1px solid #33445b;border-radius:8px;background:#101c2c;color:#fff;font-size:22px}.manualPanel iframe{flex:1;width:100%;border:0}
-@media(max-width:700px){.manualModal{padding:0}.manualPanel{height:100vh;border-radius:0}.manualHead{height:52px;flex-basis:52px}}
-</style></head>
+</head>
 <body>
 <div class="app">
 
@@ -354,7 +350,8 @@ main{max-width:1500px;margin:auto;padding:0}
   </div>
   <div class="diagramSubnav">
     <button onclick="alert('Specs panel ready for engine-specific data.')">⊕ Specs</button>
-    <button onclick="openManual()">▣ Manuals</button>
+    <button onclick="openManufacturerDiagrams()">▧ Manufacturer Diagrams</button>
+    <button onclick="openManufacturerManual()">▣ Manual</button>
     <button onclick="alert('Maintenance panel ready for service intervals.')">⚙ Maintenance</button>
   </div>
   <button class="drawerToggle" id="drawerToggle" onclick="toggleComponentDrawer()">☰ Components</button>
@@ -638,6 +635,23 @@ main{max-width:1500px;margin:auto;padding:0}
   </div>
 </section>
 
+
+<section id="manufacturerDiagrams" class="screen">
+  <button class="back" onclick="showScreen('diagram')">‹ Back to Parts Diagram</button>
+  <div class="hero"><h1>Manufacturer Exploded Diagrams</h1><p>Kohler CV620–CV730 • official manual diagram pages</p></div>
+  <div class="manufacturerViewer card">
+    <div class="manufacturerTop">
+      <div><b id="mfgPageTitle">Page 58</b><div class="muted small" id="mfgPageCaption">Breather / oil pan / piston components</div></div>
+      <div class="mfgBtns"><button class="btn" onclick="mfgPrev()">‹</button><button class="btn" onclick="mfgZoom(.8)">−</button><button class="btn" onclick="mfgZoom(1.25)">＋</button><button class="btn" onclick="mfgFit()">Fit</button><button class="btn" onclick="mfgNext()">›</button></div>
+    </div>
+    <div class="mfgCanvas" id="mfgCanvas">
+      <div class="mfgImageWrap" id="mfgImageWrap"><img id="mfgImage" alt="Official Kohler exploded parts diagram"></div>
+    </div>
+    <div class="mfgThumbs" id="mfgThumbs"></div>
+    <div class="notice good" style="margin-top:10px">These are the actual diagram pages from the Kohler CV620–CV730 service manual included with this private app build.</div>
+  </div>
+</section>
+
 <section id="parts" class="screen"><button class="back" onclick="showScreen('home')">‹ Home</button><div class="hero"><h1>Parts</h1><p>Use the exact engine identification before ordering.</p></div><div class="card"><div class="search"><input class="input" id="partInput" placeholder="OEM part number or keyword"><button class="btn primary" onclick="partSearch()">Search</button></div></div><div id="partsResults"></div></section>
 </main>
 
@@ -690,7 +704,7 @@ if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(
 
 const COMPONENTS=[{id:1,name:"Air Cleaner Assembly",part:"Reference 1",desc:"Air cleaner cover, base and intake assembly"},{id:2,name:"Carburetor Assembly",part:"Reference 2",desc:"Fuel metering assembly"},{id:3,name:"Intake Manifold",part:"Reference 3",desc:"Air intake manifold"},{id:4,name:"Cylinder Head (LH)",part:"Reference 4",desc:"Left cylinder head"},{id:5,name:"Cylinder Head (RH)",part:"Reference 5",desc:"Right cylinder head"},{id:6,name:"Spark Plug",part:"Reference 6",desc:"Ignition component"},{id:7,name:"Crankcase",part:"Reference 7",desc:"Main crankcase assembly"},{id:8,name:"Piston (LH)",part:"Reference 8",desc:"Piston and ring set"},{id:9,name:"Piston (RH)",part:"Reference 9",desc:"Piston and ring set"},{id:10,name:"Connecting Rod (LH)",part:"Reference 10",desc:"Connecting rod assembly"},{id:11,name:"Connecting Rod (RH)",part:"Reference 11",desc:"Connecting rod assembly"},{id:12,name:"Crankshaft",part:"Reference 12",desc:"Crankshaft assembly"},{id:13,name:"Oil Pan",part:"Reference 13",desc:"Lubrication sump"},{id:14,name:"Flywheel",part:"Reference 14",desc:"Flywheel assembly"},{id:15,name:"Starter Motor",part:"Reference 15",desc:"Electric starter assembly"},{id:16,name:"Muffler",part:"Reference 16",desc:"Exhaust silencer"},{id:17,name:"Oil Filter",part:"Reference 17",desc:"Lubrication filter"},{id:18,name:"Fuel Pump",part:"Reference 18",desc:"Fuel delivery pump"},{id:19,name:"Intake Elbow",part:"Reference 19",desc:"Intake elbow"},{id:20,name:"Valve Springs",part:"Reference 20",desc:"Valve train springs"},{id:21,name:"Rocker Arm (LH)",part:"Reference 21",desc:"Valve train rocker arm"},{id:22,name:"Rocker Arm (RH)",part:"Reference 22",desc:"Valve train rocker arm"},{id:23,name:"Governor Assembly",part:"Reference 23",desc:"Speed control assembly"},{id:24,name:"Fuel Line Assembly",part:"Reference 24",desc:"Fuel delivery line"},{id:25,name:"Head Gasket",part:"Reference 25",desc:"Cylinder head gasket"},{id:26,name:"Mounting Hardware",part:"Reference 26",desc:"Engine mounting hardware"},{id:27,name:"Exhaust Header",part:"Reference 27",desc:"Exhaust connection"},{id:28,name:"Air Filter Element",part:"Reference 28",desc:"Filter element"},{id:29,name:"Oil Pump",part:"Reference 29",desc:"Lubrication pump"},{id:30,name:"Dipstick",part:"Reference 30",desc:"Oil level indicator"}];
 let diagramScale=1,diagramX=0,diagramY=0,dragState=null,selectedPartId=0;
-function openDiagram(){showScreen("diagram");let e=DB[currentEngine];diagramSubtitle.textContent=`${e.maker} ${e.model} • interactive parts workspace`;renderComponents();resetDiagram();selectPart(0)}
+function openDiagram(){showScreen("diagram");let e=DB[currentEngine];document.getElementById("diagramTitle").textContent=(e.maker+" "+e.model+"⌄");renderComponents();resetDiagram();selectPart(0)}
 function renderComponents(){
   let q=(componentSearch.value||"").toLowerCase();
   componentList.innerHTML=COMPONENTS
@@ -735,7 +749,18 @@ function setDiagramMode(mode){
   document.getElementById("diagramViewport").style.cursor=mode==="pan"?"grab":"default";
 }
 
-function openManual(){const m=document.getElementById("manualModal");m.classList.add("show");m.setAttribute("aria-hidden","false");}
-function closeManual(){const m=document.getElementById("manualModal");m.classList.remove("show");m.setAttribute("aria-hidden","true");}
+const MFG_DIAGRAMS=[
+  [58,'Breather / Oil Pan / Piston Components'],[60,'Cylinder Head / Valve Train'],[62,'Cylinder Head / Related Components'],[63,'Crankcase / Main Components'],[65,'Breather / Oil Pan / Piston Components'],[66,'Full Engine Exploded Assembly'],[68,'Flywheel / Governor Components'],[75,'Full Engine Exploded Assembly'],[79,'Breather / Oil Pan / Piston Components'],[80,'Crankcase / Main Components'],[85,'Carburetor / Fuel System Components']
+];
+let mfgIndex=0,mfgScale=1,mfgX=0,mfgY=0,mfgDrag=null;
+function openManufacturerDiagrams(){showScreen('manufacturerDiagrams');mfgIndex=0;renderMfg();mfgFit()}
+function openManufacturerManual(){window.open('assets/kohler_cv730/Kohler_CV620_CV730_Service_Manual.pdf','_blank')}
+function renderMfg(){let d=MFG_DIAGRAMS[mfgIndex],img=document.getElementById('mfgImage');img.src='assets/kohler_cv730/page-'+d[0]+'.png';document.getElementById('mfgPageTitle').textContent='Page '+d[0];document.getElementById('mfgPageCaption').textContent=d[1];document.getElementById('mfgThumbs').innerHTML=MFG_DIAGRAMS.map((x,i)=>`<button class="mfgThumb ${i===mfgIndex?'active':''}" onclick="mfgIndex=${i};renderMfg();mfgFit()"><img src="assets/kohler_cv730/page-${x[0]}.png"><span>p.${x[0]}</span></button>`).join('')}
+function mfgApply(){document.getElementById('mfgImageWrap').style.transform=`translate(calc(-50% + ${mfgX}px),calc(-50% + ${mfgY}px)) scale(${mfgScale})`}
+function mfgFit(){mfgScale=1;mfgX=0;mfgY=0;mfgApply()}
+function mfgZoom(f){mfgScale=Math.min(4,Math.max(.35,mfgScale*f));mfgApply()}
+function mfgPrev(){mfgIndex=(mfgIndex-1+MFG_DIAGRAMS.length)%MFG_DIAGRAMS.length;renderMfg();mfgFit()}
+function mfgNext(){mfgIndex=(mfgIndex+1)%MFG_DIAGRAMS.length;renderMfg();mfgFit()}
+(function(){let c=document.getElementById('mfgCanvas');if(!c)return;c.addEventListener('pointerdown',e=>{mfgDrag={x:e.clientX,y:e.clientY,ox:mfgX,oy:mfgY};document.getElementById('mfgImageWrap').classList.add('dragging');c.setPointerCapture(e.pointerId)});c.addEventListener('pointermove',e=>{if(!mfgDrag)return;mfgX=mfgDrag.ox+e.clientX-mfgDrag.x;mfgY=mfgDrag.oy+e.clientY-mfgDrag.y;mfgApply()});c.addEventListener('pointerup',()=>{mfgDrag=null;document.getElementById('mfgImageWrap').classList.remove('dragging')});c.addEventListener('wheel',e=>{e.preventDefault();mfgZoom(e.deltaY<0?1.12:.89)},{passive:false})})();
 </script>
 </body></html>

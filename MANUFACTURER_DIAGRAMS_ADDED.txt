@@ -1,0 +1,17 @@
+Small Engine Pro — Manufacturer Diagram Integration
+
+Added the actual Kohler CV620–CV730 service-manual diagram pages to the private app build.
+
+Included diagram pages: 58, 60, 62, 63, 65, 66, 68, 75, 79, 80, 85.
+Included full official service manual PDF for the same engine family.
+
+The new Manufacturer Diagrams screen provides:
+- actual manufacturer page images
+- page thumbnails
+- previous/next navigation
+- pinch/wheel-style zoom
+- pan/drag
+- fit/reset
+- full manual access
+
+Source: Kohler CV17-CV25, CV620-CV730, CV740, CV750 Service Manual, 24 690 07 Rev. L, hosted by Kohler.
