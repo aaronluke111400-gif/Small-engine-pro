@@ -651,11 +651,11 @@ main{max-width:1500px;margin:auto;padding:0}
 
 <section id="manufacturerDiagrams" class="screen">
   <button class="diagramBackActual" onclick="showScreen('diagram')">‹ Back to interactive diagram</button>
-  <div class="hero"><h1>Manufacturer Exploded Diagrams</h1><p>Kohler CV620–CV730 • actual Kohler service-manual pages</p></div>
+  <div class="hero"><h1>CV730 — Actual Kohler Exploded Diagram</h1><p>Manufacturer source • real service-manual artwork</p></div>
   <div class="manufacturerTop" style="margin:0 0 8px">
     <div class="mfgNav">
       <button class="btn primary" onclick="openManufacturerManual()">📖 Open Full Manual</button>
-      <button class="btn" onclick="showScreen('diagram')">⚙ Interactive View</button>
+      <button class="btn" onclick="showScreen('diagram')">⚙ Interactive Overlay</button>
     </div>
     <div class="mfgPageJump"><span class="muted small">Diagram</span><select id="mfgSelect" onchange="mfgIndex=+this.value;renderMfg();mfgFit()"></select></div>
   </div>
@@ -668,7 +668,7 @@ main{max-width:1500px;margin:auto;padding:0}
       <div class="mfgImageWrap" id="mfgImageWrap"><img id="mfgImage" alt="Actual Kohler exploded parts diagram"></div>
     </div>
     <div class="mfgThumbs" id="mfgThumbs"></div>
-    <div class="mfgNotice" style="margin-top:8px">These pages are the actual diagram pages from the Kohler CV620–CV730 service manual bundled with this private build. Pinch/scroll or use the controls to zoom and drag to inspect details.</div>
+    <div class="mfgNotice" style="margin-top:8px"><b>REAL MANUFACTURER IMAGE:</b> This viewer displays the actual Kohler service-manual page, not the recreated illustration. These pages are the actual diagram pages from the Kohler CV620–CV730 service manual bundled with this private build. Pinch/scroll or use the controls to zoom and drag to inspect details.</div>
   </div>
 </section>
 <section id="parts" class="screen"><button class="back" onclick="showScreen('home')">‹ Home</button><div class="hero"><h1>Parts</h1><p>Use the exact engine identification before ordering.</p></div><div class="card"><div class="search"><input class="input" id="partInput" placeholder="OEM part number or keyword"><button class="btn primary" onclick="partSearch()">Search</button></div></div><div id="partsResults"></div></section>
@@ -678,7 +678,7 @@ main{max-width:1500px;margin:auto;padding:0}
 <nav class="bottom"><div class="bottomin">
 <button class="navbtn" data-screen="home" onclick="showScreen('home')"><span>⌂</span>Home</button>
 <button class="navbtn" data-screen="search" onclick="showScreen('search')"><span>⌕</span>Search</button>
-<button class="navbtn active" data-screen="parts" onclick="showScreen('parts')"><span>⚙</span>Parts</button>
+<button class="navbtn active" data-screen="manufacturerDiagrams" onclick="openManufacturerDiagrams()"><span>⚙</span>Parts</button>
 <button class="navbtn" data-screen="equipment" onclick="showScreen('equipment')"><span>⚙</span>Equipment</button>
 <button class="navbtn" data-screen="equipment" onclick="showScreen('equipment')"><span>▤</span>My Lists</button>
 <button class="navbtn" data-screen="home" onclick="showScreen('home')"><span>•••</span>More</button>
@@ -720,6 +720,7 @@ function removeEq(i){equipment.splice(i,1);localStorage.setItem("sep_eq",JSON.st
 function renderRecent(){let list=recent.map(i=>DB[i]).filter(Boolean);cards(list,recentEl)}
 const recentEl=document.getElementById("recent");renderRecent();searchInput.addEventListener("keydown",e=>{if(e.key==="Enter")doSearch()});searchInput2.addEventListener("keydown",e=>{if(e.key==="Enter")doSearch2()});
 renderMfg();
+showScreen("manufacturerDiagrams");
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 
 const COMPONENTS=[{id:1,name:"Air Cleaner Assembly",part:"Reference 1",desc:"Air cleaner cover, base and intake assembly"},{id:2,name:"Carburetor Assembly",part:"Reference 2",desc:"Fuel metering assembly"},{id:3,name:"Intake Manifold",part:"Reference 3",desc:"Air intake manifold"},{id:4,name:"Cylinder Head (LH)",part:"Reference 4",desc:"Left cylinder head"},{id:5,name:"Cylinder Head (RH)",part:"Reference 5",desc:"Right cylinder head"},{id:6,name:"Spark Plug",part:"Reference 6",desc:"Ignition component"},{id:7,name:"Crankcase",part:"Reference 7",desc:"Main crankcase assembly"},{id:8,name:"Piston (LH)",part:"Reference 8",desc:"Piston and ring set"},{id:9,name:"Piston (RH)",part:"Reference 9",desc:"Piston and ring set"},{id:10,name:"Connecting Rod (LH)",part:"Reference 10",desc:"Connecting rod assembly"},{id:11,name:"Connecting Rod (RH)",part:"Reference 11",desc:"Connecting rod assembly"},{id:12,name:"Crankshaft",part:"Reference 12",desc:"Crankshaft assembly"},{id:13,name:"Oil Pan",part:"Reference 13",desc:"Lubrication sump"},{id:14,name:"Flywheel",part:"Reference 14",desc:"Flywheel assembly"},{id:15,name:"Starter Motor",part:"Reference 15",desc:"Electric starter assembly"},{id:16,name:"Muffler",part:"Reference 16",desc:"Exhaust silencer"},{id:17,name:"Oil Filter",part:"Reference 17",desc:"Lubrication filter"},{id:18,name:"Fuel Pump",part:"Reference 18",desc:"Fuel delivery pump"},{id:19,name:"Intake Elbow",part:"Reference 19",desc:"Intake elbow"},{id:20,name:"Valve Springs",part:"Reference 20",desc:"Valve train springs"},{id:21,name:"Rocker Arm (LH)",part:"Reference 21",desc:"Valve train rocker arm"},{id:22,name:"Rocker Arm (RH)",part:"Reference 22",desc:"Valve train rocker arm"},{id:23,name:"Governor Assembly",part:"Reference 23",desc:"Speed control assembly"},{id:24,name:"Fuel Line Assembly",part:"Reference 24",desc:"Fuel delivery line"},{id:25,name:"Head Gasket",part:"Reference 25",desc:"Cylinder head gasket"},{id:26,name:"Mounting Hardware",part:"Reference 26",desc:"Engine mounting hardware"},{id:27,name:"Exhaust Header",part:"Reference 27",desc:"Exhaust connection"},{id:28,name:"Air Filter Element",part:"Reference 28",desc:"Filter element"},{id:29,name:"Oil Pump",part:"Reference 29",desc:"Lubrication pump"},{id:30,name:"Dipstick",part:"Reference 30",desc:"Oil level indicator"}];
