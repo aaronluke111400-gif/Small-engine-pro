@@ -788,13 +788,13 @@ const MFG_DIAGRAMS=[
 ];
 let mfgIndex=0,mfgScale=1,mfgX=0,mfgY=0,mfgDrag=null;
 function openManufacturerDiagrams(){showScreen('manufacturerDiagrams');mfgIndex=0;renderMfg();mfgFit()}
-function openManufacturerManual(){window.open('https://raw.githubusercontent.com/aaronluke111400-gif/Small-engine-pro/main/Kohler_CV620_CV730_Service_Manual.pdf','_blank')}
+function openManufacturerManual(){window.open('./Kohler_CV620_CV730_Service_Manual.pdf','_blank')}
 function renderMfg(){
  let d=MFG_DIAGRAMS[mfgIndex],img=document.getElementById('mfgImage'); if(!img)return;
- img.src='https://raw.githubusercontent.com/aaronluke111400-gif/Small-engine-pro/main/page-'+d[0]+'.png';
+ img.onerror=function(){console.error('Diagram failed to load:',img.src)};img.src='./page-'+d[0]+'.png';
  document.getElementById('mfgPageTitle').textContent='Page '+d[0];
  document.getElementById('mfgPageCaption').textContent=d[1];
- document.getElementById('mfgThumbs').innerHTML=MFG_DIAGRAMS.map((x,i)=>`<button class="mfgThumb ${i===mfgIndex?'active':''}" onclick="mfgIndex=${i};renderMfg();mfgFit()"><img src="https://raw.githubusercontent.com/aaronluke111400-gif/Small-engine-pro/main/page-${x[0]}.png"><span>p.${x[0]}</span></button>`).join('');
+ document.getElementById('mfgThumbs').innerHTML=MFG_DIAGRAMS.map((x,i)=>`<button class="mfgThumb ${i===mfgIndex?'active':''}" onclick="mfgIndex=${i};renderMfg();mfgFit()"><img src="./page-${x[0]}.png"><span>p.${x[0]}</span></button>`).join('');
  let sel=document.getElementById('mfgSelect'); if(sel) sel.innerHTML=MFG_DIAGRAMS.map((x,i)=>`<option value="${i}" ${i===mfgIndex?'selected':''}>p.${x[0]} — ${x[1]}</option>`).join('');
 }
 function mfgApply(){let w=document.getElementById('mfgImageWrap');if(w)w.style.transform=`translate(calc(-50% + ${mfgX}px),calc(-50% + ${mfgY}px)) scale(${mfgScale})`}
