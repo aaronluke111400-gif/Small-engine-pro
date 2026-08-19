@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Small Engine Pro">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<title>Small Engine Pro</title>
+<style>
+:root{--bg:#f5f7fa;--card:#fff;--ink:#0f172a;--muted:#64748b;--line:#e2e8f0;--blue:#2563eb;--green:#15803d;--amber:#b45309;--red:#b91c1c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{background:#0f172a;color:#fff;padding:22px 18px 18px;position:sticky;top:0;z-index:10}.wrap{max-width:900px;margin:auto}h1{font-size:28px;margin:0}header p{margin:5px 0 0;color:#cbd5e1}
+main{padding:16px}.nav{display:flex;gap:8px;overflow:auto;margin-bottom:14px}.nav button{white-space:nowrap}.btn{border:1px solid #cbd5e1;background:#fff;color:var(--ink);border-radius:12px;padding:11px 14px;font-weight:700}.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 2px 8px #00000008}.search{display:flex;gap:8px}input,select{width:100%;padding:14px;border:1px solid #cbd5e1;border-radius:12px;font-size:16px;background:#fff}.search input{flex:1}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-size:12px;font-weight:800}.status{font-size:12px;font-weight:800}.verified{color:var(--green)}.warning{color:var(--amber)}
+.muted{color:var(--muted)}h2{margin:6px 0;font-size:21px}h3{margin:20px 0 10px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.spec{border:1px solid var(--line);border-radius:12px;padding:11px}.label{font-size:12px;color:var(--muted)}.value{font-weight:700;margin-top:3px}.notice{padding:12px;border-radius:12px;background:#fffbeb;border:1px solid #fde68a;color:#92400e;font-size:13px}.good{background:#f0fdf4;border-color:#bbf7d0;color:#166534}.tabs{display:flex;gap:8px;overflow:auto;margin:15px 0}.tabs button{white-space:nowrap}.hidden{display:none}.empty{text-align:center;color:var(--muted);padding:28px 10px}.source{font-size:14px}.money{font-size:24px;font-weight:800}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.photo{width:100%;border-radius:14px;margin-top:10px;display:none}.file{display:block;padding:14px;border:1px dashed #94a3b8;border-radius:14px;text-align:center;font-weight:700}
+@media(max-width:600px){.grid,.two{grid-template-columns:1fr}.search{flex-direction:column}.search .btn{width:100%}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><h1>Small Engine Pro</h1><p>Identify it • Find it • Fix it • Track it</p></div></header>
+<main class="wrap">
+<div class="nav">
+<button class="btn primary" onclick="view('find')">🔎 Find Engine</button>
+<button class="btn" onclick="view('scan')">📷 Scan Tag</button>
+<button class="btn" onclick="view('garage')">🧰 My Equipment</button>
+<button class="btn" onclick="view('parts')">🔢 Part Search</button>
+</div>
+
+<section id="find">
+<div class="card"><h2>Find an engine</h2><p class="muted">Search by model, type/spec, manufacturer, serial prefix, or plain-English keywords.</p>
+<div class="search"><input id="query" placeholder="Example: CV730, GX390, 27 HP Kohler"><button class="btn primary" onclick="search()">Search</button></div></div>
+<div id="results"></div><div id="engineDetail"></div>
+</section>
+
+<section id="scan" class="hidden">
+<div class="card"><h2>📷 Scan engine tag</h2>
+<p class="muted">Capture the identification label. This web version stores the photo locally and prepares the fields for verification. It does not invent an engine or part number when the label is unclear.</p>
+<label class="file">Take / choose engine-tag photo<input id="tagPhoto" type="file" accept="image/*" capture="environment" style="display:none" onchange="scanPhoto(this)"></label>
+<img id="photo" class="photo">
+<div id="scanMsg"></div>
+</div>
+</section>
+
+<section id="garage" class="hidden">
+<div class="card"><h2>🧰 My Equipment</h2><div class="two">
+<input id="eqName" placeholder="Equipment name"><input id="eqEngine" placeholder="Engine model/spec">
+<input id="eqBuy" type="number" step="0.01" placeholder="Purchase price"><input id="eqSale" type="number" step="0.01" placeholder="Sale price (optional)">
+</div><br><button class="btn primary" onclick="addEquipment()">Save Equipment</button></div>
+<div id="garageList"></div>
+</section>
+
+<section id="parts" class="hidden">
+<div class="card"><h2>🔢 Part Search</h2><p class="muted">Enter a known OEM part number or keyword. Small Engine Pro routes you to the manufacturer's official lookup rather than guessing fitment.</p>
+<div class="search"><input id="partQuery" placeholder="Part number or keyword"><button class="btn primary" onclick="partSearch()">Search</button></div></div>
+<div id="partResults"></div>
+</section>
+</main>
+
+<script>
+const DB=[
+{maker:"Kohler",model:"CV730",family:"Command PRO V-Twin",keys:"27 hp kohler command cv730 v twin",specs:{Power:"27 HP",Displacement:"725 cc",Layout:"V-Twin",Fuel:"Gasoline",Cooling:"Air cooled"},sources:[["Kohler Engines","https://www.kohlerengines.com/"],["Kohler Parts Catalog","https://partners.kohlerengines.com/App/SparepartCatalogue_2.0/Default/Catalogue.aspx"]],idFields:["Model","Serial"]},
+{maker:"Briggs & Stratton",model:"31C707",family:"31C700 series",keys:"briggs stratton 31c707 17.5 18.5 19.5 hp",specs:{Family:"31C700",Layout:"Single-cylinder",Fuel:"Gasoline",Cooling:"Air cooled"},sources:[["Manuals & Parts Lists","https://www.briggsandstratton.com/en-us/support/manuals"],["Official Parts Lookup","https://shop.briggsandstratton.com/pages/parts-lookup"]],idFields:["Model","Type","Code"]},
+{maker:"Kawasaki",model:"FR691V",family:"FR Series V-Twin",keys:"kawasaki fr691v 23 hp",specs:{Power:"23 HP",Displacement:"726 cc",Layout:"V-Twin",Fuel:"Gasoline",Cooling:"Air cooled"},sources:[["Kawasaki Parts & Diagrams","https://www.kawasaki.com/en-us/owner-center/parts"]],idFields:["Model","Spec","Serial"]},
+{maker:"Honda",model:"GX390",family:"GX Series",keys:"honda gx390 389 cc",specs:{Displacement:"389 cc",Layout:"Single-cylinder",Fuel:"Gasoline",Cooling:"Air cooled"},sources:[["Honda Parts & Service","https://engines.honda.com/support-and-service"],["Honda Publications","https://publications.powerequipment.honda.com/engines"]],idFields:["Model","Type","Serial"]}
+];
+
+function view(id){["find","scan","garage","parts"].forEach(x=>document.getElementById(x).classList.toggle("hidden",x!==id));if(id==="garage")renderGarage()}
+function search(){let q=document.getElementById("query").value.toLowerCase().trim();let found=DB.filter(e=>(e.maker+" "+e.model+" "+e.family+" "+e.keys).toLowerCase().includes(q)||!q);document.getElementById("results").innerHTML=found.length?found.map((e,i)=>`<div class="card row"><div><span class="badge">${e.maker}</span><h2>${e.model}</h2><div class="muted">${e.family}</div></div><button class="btn" onclick="openEngine(${i})">Open</button></div>`).join(""):`<div class="card empty">No verified starter match. Try the complete model/type/spec.</div>`;document.getElementById("engineDetail").innerHTML=""}
+function openEngine(i){let e=DB[i];document.getElementById("engineDetail").innerHTML=`<div class="card"><span class="badge">${e.maker}</span><h2>${e.model}</h2><div class="muted">${e.family}</div><div class="notice" style="margin-top:12px">🟡 Family-level reference. Exact service values and parts require the complete identification: ${e.idFields.join(", ")}.</div><div class="tabs"><button class="btn primary">Specs</button><button class="btn" onclick="showSources(${i})">Sources</button></div><h3>Specifications</h3><div class="grid">${Object.entries(e.specs).map(a=>`<div class="spec"><div class="label">${a[0]}</div><div class="value">${a[1]}</div></div>`).join("")}</div><h3>Exact identification</h3><div class="grid">${e.idFields.map(x=>`<div class="spec"><div class="label">${x}</div><div class="value">Required</div></div>`).join("")}</div><p class="small muted">Small Engine Pro will not present an OEM part as a confirmed fit until these identifiers are matched.</p></div>`}
+function showSources(i){let e=DB[i];document.getElementById("engineDetail").innerHTML+=`<div class="card"><h3>Official sources</h3>${e.sources.map(s=>`<p class="source"><a href="${s[1]}" target="_blank" rel="noopener">${s[0]}</a></p>`).join("")}</div>`}
+function scanPhoto(input){if(!input.files[0])return;let img=document.getElementById("photo");img.src=URL.createObjectURL(input.files[0]);img.style.display="block";document.getElementById("scanMsg").innerHTML=`<div class="notice" style="margin-top:12px">Photo captured. For a production build, OCR will extract model/type/spec/serial here, then the identification will be verified against the manufacturer's source before parts are shown.</div>`}
+function partSearch(){let q=document.getElementById("partQuery").value.trim();if(!q){partResults.innerHTML="";return}partResults.innerHTML=`<div class="card"><h3>Manufacturer lookups for “${q.replace(/</g,"&lt;")}”</h3><p><a href="https://shop.briggsandstratton.com/pages/parts-lookup" target="_blank">Briggs & Stratton official parts lookup</a></p><p><a href="https://partners.kohlerengines.com/App/SparepartCatalogue_2.0/Default/Catalogue.aspx" target="_blank">Kohler official parts catalog</a></p><p><a href="https://www.kawasaki.com/en-us/owner-center/parts" target="_blank">Kawasaki official parts diagrams</a></p><p><a href="https://engines.honda.com/support-and-service" target="_blank">Honda official parts & service</a></p><div class="notice">Fitment is manufacturer-specific. Enter the exact engine identification before ordering.</div></div>`}
+let equipment=JSON.parse(localStorage.getItem("sep_equipment")||"[]");
+function addEquipment(){let n=eqName.value.trim();if(!n)return;equipment.push({name:n,engine:eqEngine.value.trim(),buy:+eqBuy.value||0,sale:+eqSale.value||0,repairs:[]});localStorage.setItem("sep_equipment",JSON.stringify(equipment));eqName.value=eqEngine.value=eqBuy.value=eqSale.value="";renderGarage()}
+function renderGarage(){garageList.innerHTML=equipment.length?equipment.map((e,i)=>{let repairs=e.repairs.reduce((a,b)=>a+(+b.cost||0),0),total=e.buy+repairs,profit=e.sale?e.sale-total:null;return `<div class="card"><div class="row"><div><span class="badge">Equipment</span><h2>${e.name}</h2><div class="muted">${e.engine||"Engine not entered"}</div></div><button class="btn" onclick="removeEq(${i})">Delete</button></div><div class="two" style="margin-top:14px"><div class="spec"><div class="label">Purchase</div><div class="value">$${e.buy.toFixed(2)}</div></div><div class="spec"><div class="label">Repairs</div><div class="value">$${repairs.toFixed(2)}</div></div><div class="spec"><div class="label">Invested</div><div class="value">$${total.toFixed(2)}</div></div><div class="spec"><div class="label">Profit</div><div class="value">${profit===null?"—":"$"+profit.toFixed(2)}</div></div></div><button class="btn" style="margin-top:12px" onclick="addRepair(${i})">+ Add repair cost</button></div>`}).join(""):'<div class="card empty">No equipment saved yet.</div>'}
+function addRepair(i){let c=prompt("Repair/parts cost:");if(c===null)return;equipment[i].repairs.push({cost:+c||0});localStorage.setItem("sep_equipment",JSON.stringify(equipment));renderGarage()}
+function removeEq(i){equipment.splice(i,1);localStorage.setItem("sep_equipment",JSON.stringify(equipment));renderGarage()}
+query.addEventListener("keydown",e=>{if(e.key==="Enter")search()});search();
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body></html>
